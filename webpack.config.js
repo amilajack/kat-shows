@@ -22,8 +22,8 @@ export default {
     path: path.join(__dirname, 'lib'),
     filename: 'kat-shows.js',
     libraryTarget: 'umd',
-    library: 'kat-shows',
-    umdNamedDefine: 'kat-shows'
+    library: 'KatShows',
+    umdNamedDefine: 'KatShows'
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],

@@ -1,6 +1,6 @@
 {
   "name": "kat-shows",
-  "version": "1.1.9",
+  "version": "0.0.1",
   "description": "The kat shows api client",
   "homepage": "http://github.com/amilajack/kat-shows",
   "repository": "git://github.com/amilajack/kat-shows.git",
@@ -23,8 +23,7 @@
     "clean": "rm -rf lib",
     "lint": "cross-env NODE_ENV=test eslint src test",
     "version": "npm run build",
-    "precommit": "npm run test-all",
-    "debug": "cross-env NODE_ENV=test mocha debug --harmony"
+    "precommit": "npm run test-all"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
