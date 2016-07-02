@@ -1,20 +1,19 @@
 {
   "name": "kat-shows",
   "version": "1.1.9",
-  "description": "The pirate bay client",
-  "homepage": "http://github.com/t3chnoboy/kat-shows",
-  "repository": "git://github.com/t3chnoboy/kat-shows.git",
-  "author": "Dmitry Mazuro <dmitry.mazuro@icloud.com>",
+  "description": "The kat shows api client",
+  "homepage": "http://github.com/amilajack/kat-shows",
+  "repository": "git://github.com/amilajack/kat-shows.git",
+  "author": "Amila Welihinda <amilajack@gmail.com>",
   "main": "index.js",
   "browser": {
     "index.js": "./lib/kat-shows.js"
   },
   "keywords": [
-    "kat-shows",
-    "pirate bay",
-    "torrent",
-    "client",
-    "scraper"
+    "kat",
+    "api",
+    "shows",
+    "tv"
   ],
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --bail --timeout 30000 --inline-diffs --async-only --growl --compilers js:babel-register --recursive --require ./test/setup.js test/*.spec.js",
@@ -24,6 +23,7 @@
     "clean": "rm -rf lib",
     "lint": "cross-env NODE_ENV=test eslint src test",
     "version": "npm run build",
+    "precommit": "npm run test-all",
     "debug": "cross-env NODE_ENV=test mocha debug --harmony"
   },
   "devDependencies": {
@@ -39,12 +39,13 @@
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
     "cross-env": "^1.0.8",
-    "eslint": "^2.13.1",
+    "eslint": "^3.0.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-immutable": "^1.0.0",
     "eslint-plugin-import": "^1.10.0",
     "eslint-plugin-jsx-a11y": "^1.5.3",
     "eslint-plugin-react": "^5.2.2",
+    "husky": "^0.11.4",
     "json-loader": "^0.5.4",
     "mocha": "^2.5.3",
     "uglifyify": "^3.0.2",
