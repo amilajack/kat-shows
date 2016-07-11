@@ -6,21 +6,11 @@
  *        function
  */
 
-/* eslint no-unused-expressions: 0, new-cap: 0 no-console: 0, func-names: 0 */
+/*
+ eslint no-unused-expressions: 0, new-cap: 0 no-console: 0, func-names: 0, no-use-before-define: 0
+*/
 import { expect } from 'chai';
 import Torrent, { findShowUrl, findEpisodeId } from '../src/Torrent';
-
-
-function assertTorrentsFormat(torrents) {
-  expect(torrents).to.be.an('array');
-
-  const torrent = torrents[0];
-  expect(torrent).to.be.an('object');
-  expect(torrent).to.have.deep.property('magnet').that.is.a('string');
-  expect(torrent.magnet).to.include('magnet:?');
-  expect(torrent).to.have.deep.property('seeders').that.is.a('number');
-  expect(torrent).to.have.deep.property('leechers').that.is.a('number');
-}
 
 
 describe('api', () => {
@@ -75,9 +65,29 @@ describe('api', () => {
       }
     });
 
+    it('should return movies with lowercase query', async done => {
+      try {
+        expect(await findEpisodeId('game of thrones', '02', '02'))
+          .to.equal('237994168');
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
     it('should return object with magnet, seeders, leechers: 1', async done => {
       try {
         const torrents = await Torrent('Game of thrones', '02', '02');
+        assertTorrentsFormat(torrents);
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
+    it('should return object with magnet, seeders, lowercase query', async done => {
+      try {
+        const torrents = await Torrent('game of thrones', '02', '02');
         assertTorrentsFormat(torrents);
         done();
       } catch (err) {
@@ -98,3 +108,14 @@ describe('api', () => {
     });
   });
 });
+
+function assertTorrentsFormat(torrents) {
+  expect(torrents).to.be.an('array');
+
+  const torrent = torrents[0];
+  expect(torrent).to.be.an('object');
+  expect(torrent).to.have.deep.property('magnet').that.is.a('string');
+  expect(torrent.magnet).to.include('magnet:?');
+  expect(torrent).to.have.deep.property('seeders').that.is.a('number');
+  expect(torrent).to.have.deep.property('leechers').that.is.a('number');
+}

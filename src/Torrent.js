@@ -32,6 +32,7 @@ export async function parseShows() {
 }
 
 export async function findShowUrl(showName) {
+  if (process.env.NODE_ENV !== 'production') console.log({ showName });
   if (!showName) throw new Error('Show name param required');
 
   const parsedShows = await parseShows();
@@ -39,6 +40,12 @@ export async function findShowUrl(showName) {
   const showUrl = parsedShows.find(
     item => item.includes((`/${showName}`).toLowerCase().replace(/ /g, '-'))
   );
+
+  if (process.env.NODE_ENV !== 'production') console.log({ showName, showUrl });
+
+  if (!showUrl) {
+    throw new Error('A show could not be found');
+  }
 
   return `${baseUrl}${showUrl}`;
 }
