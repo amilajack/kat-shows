@@ -10,7 +10,9 @@
  eslint no-unused-expressions: 0, new-cap: 0 no-console: 0, func-names: 0, no-use-before-define: 0
 */
 import { expect } from 'chai';
-import Torrent, { findShowUrl, findEpisodeId } from '../src/Torrent';
+import Torrent, {
+  findShowUrl, findEpisodeId, parseShows
+} from '../src/Torrent';
 
 
 describe('api', () => {
@@ -18,6 +20,27 @@ describe('api', () => {
     it('should return promise', async done => {
       try {
         expect(findShowUrl('game of thrones')).to.be.a('promise');
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
+    it('should find show url and return array of links', async done => {
+      try {
+        const showName = 'game of thrones';
+        const parsedShows = await parseShows();
+        const showUrl = parsedShows.find(
+          item => item.includes((`/${showName}`).toLowerCase().replace(/ /g, '-'))
+        );
+
+        expect(parsedShows).to.be.an('array');
+
+        for (const eachShowUrl of parsedShows) {
+          expect(eachShowUrl).to.be.an('string');
+        }
+
+        expect(showUrl).to.be.an('string');
         done();
       } catch (err) {
         done(err);

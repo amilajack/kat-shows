@@ -6,10 +6,8 @@ export default {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: [
-          path.resolve(__dirname, 'src')
-        ],
-        loader: 'babel-loader'
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
       },
       {
         test: /\.json$/,

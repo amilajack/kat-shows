@@ -36,12 +36,15 @@ export async function findShowUrl(showName) {
   if (!showName) throw new Error('Show name param required');
 
   const parsedShows = await parseShows();
+  const formattedShowUrl = (`/${showName}`).toLowerCase().replace(/ /g, '-');
 
   const showUrl = parsedShows.find(
-    item => item.includes((`/${showName}`).toLowerCase().replace(/ /g, '-'))
+    showUrls => showUrls.includes(formattedShowUrl)
   );
 
-  if (process.env.NODE_ENV !== 'production') console.log({ showName, showUrl });
+  if (process.env.NODE_ENV !== 'production') {
+    console.log({ showName, showUrl, formattedShowUrl, parsedShows });
+  }
 
   if (!showUrl) {
     throw new Error('A show could not be found');
