@@ -11,7 +11,10 @@
 */
 import { expect } from 'chai';
 import Torrent, {
-  findShowUrl, findEpisodeId, parseShows
+  findShowUrl,
+  findEpisodeId,
+  parseShows,
+  formatShowNameToUrl
 } from '../src/Torrent';
 
 
@@ -26,12 +29,42 @@ describe('api', () => {
       }
     });
 
+    it('should correctly format show names to url slugs', done => {
+      try {
+        expect(formatShowNameToUrl('Game of Thrones')).to.equal('/game-of-thrones');
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
+    it('should parse shows page and return array of show urls', async done => {
+      try {
+        const showUrls = await parseShows();
+        expect(showUrls).to.be.an('array');
+        const formattedShowUrl = formatShowNameToUrl('game of thrones');
+
+        for (const url of showUrls) {
+          expect(url).to.be.a('string');
+        }
+
+        const showUrl = showUrls.find(
+          item => item.includes(formattedShowUrl)
+        );
+
+        expect(showUrl).to.equal('/game-of-thrones-tv11489/');
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
     it('should find show url and return array of links', async done => {
       try {
         const showName = 'game of thrones';
         const parsedShows = await parseShows();
         const showUrl = parsedShows.find(
-          item => item.includes((`/${showName}`).toLowerCase().replace(/ /g, '-'))
+          item => item.includes(formatShowNameToUrl(showName))
         );
 
         expect(parsedShows).to.be.an('array');

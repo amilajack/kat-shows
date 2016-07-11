@@ -7,6 +7,10 @@ import fetch from 'isomorphic-fetch';
 
 export const baseUrl = 'https://kat.cr';
 
+export function formatShowNameToUrl(showName) {
+  return (`/${showName}`).toLowerCase().replace(/ /g, '-');
+}
+
 export async function parseShows() {
   try {
     const showsHtml = await fetch(`${baseUrl}/tv/show`, {
@@ -36,7 +40,7 @@ export async function findShowUrl(showName) {
   if (!showName) throw new Error('Show name param required');
 
   const parsedShows = await parseShows();
-  const formattedShowUrl = (`/${showName}`).toLowerCase().replace(/ /g, '-');
+  const formattedShowUrl = formatShowNameToUrl(showName);
 
   const showUrl = parsedShows.find(
     showUrls => showUrls.includes(formattedShowUrl)
