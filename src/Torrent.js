@@ -93,6 +93,7 @@ export default async function parseTorrent(showName, season, episode) {
   const torrents = $("table tr:not('.firstr')").map(function formatTorrents() {
     return {
       magnet: $(this).find('[title="Torrent magnet link"]').attr('href'),
+      metadata: $(this).find('[title="Torrent magnet link"]').attr('href'),
       seeders: parseInt($(this).find('.green.center').text(), 10),
       leechers: parseInt($(this).find('.red.lasttd.center').text(), 10)
     };
