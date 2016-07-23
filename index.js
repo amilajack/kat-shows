@@ -1,1 +1,1 @@
-module.exports = require('./lib/Torrent');
+module.exports = require('./src/Torrent');
