@@ -5,7 +5,8 @@ import cheerio from 'cheerio';
 import fetch from 'isomorphic-fetch';
 
 
-export const baseUrl = 'https://kat.cr';
+export const baseUrl = 'https://kat.am';
+export const mirrorBaseUrl = 'http://kickasstorrentsan.com/';
 
 export function formatShowNameToUrl(showName) {
   return (`/${showName}`).toLowerCase().replace(/ /g, '-');
@@ -13,7 +14,7 @@ export function formatShowNameToUrl(showName) {
 
 export async function parseShows() {
   try {
-    const showsHtml = await fetch(`${baseUrl}/tv/show`, {
+    const showsHtml = await fetch(`${baseUrl}/tv`, {
       mode: 'no-cors'
     })
     .then(response => response.text());
@@ -71,7 +72,9 @@ export async function findEpisodeId(showName, season, episode) {
   const indexes = [];
   const ids = [];
 
-  for (let i = 0; i < episodeUrl.length; i++) {
+  let epiUrlLen = episodeUrl.length;
+  
+  for (let i = 0; i < epiUrlLen; i++) {
     if (episodeUrl[i] === "'") indexes.push(i);
   }
 
