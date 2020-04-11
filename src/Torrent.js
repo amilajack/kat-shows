@@ -2,7 +2,7 @@
  * Parse all pages
  */
 import cheerio from 'cheerio';
-import fetch from 'isomorphic-fetch';
+import fetch from 'node-fetch';
 
 
 export const baseUrl = 'https://kat.cr';
@@ -16,7 +16,7 @@ export async function parseShows() {
     const showsHtml = await fetch(`${baseUrl}/tv/show`, {
       mode: 'no-cors'
     })
-    .then(response => response.text());
+      .then((response) => response.text());
 
     const $ = cheerio.load(showsHtml);
 
@@ -42,7 +42,7 @@ export async function findShowUrl(showName) {
   const formattedShowUrl = formatShowNameToUrl(showName);
 
   const showUrl = parsedShows.find(
-    showUrls => showUrls.includes(formattedShowUrl)
+    (showUrls) => showUrls.includes(formattedShowUrl)
   );
 
   if (!showUrl) {
@@ -57,7 +57,7 @@ export async function findEpisodeId(showName, season, episode) {
   const episodeTorrentsHtml = await fetch(showUrl, {
     mode: 'no-cors'
   })
-  .then(response => response.text());
+    .then((response) => response.text());
 
   const $ = cheerio.load(episodeTorrentsHtml);
 
@@ -86,7 +86,7 @@ export default async function parseTorrent(showName, season, episode) {
   const episodeId = await findEpisodeId(showName, season, episode);
 
   const torrentsHtml = await fetch(`${baseUrl}/media/getepisode/${episodeId}`)
-    .then(res => res.text());
+    .then((res) => res.text());
 
   const $ = cheerio.load(torrentsHtml);
 
