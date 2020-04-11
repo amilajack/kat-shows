@@ -1,5 +1,6 @@
 {
   "name": "kat-shows",
+  "license": "MIT",
   "version": "0.0.4",
   "description": "The kat shows api client",
   "homepage": "http://github.com/amilajack/kat-shows",
@@ -17,7 +18,7 @@
     "clean": "rm -rf lib",
     "lint": "eslint .",
     "test": "jest",
-    "test-all": "cross-env NODE_ENV=test npm run lint && npm run test && npm run build"
+    "test-all": "npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -40,5 +41,14 @@
   },
   "eslintConfig": {
     "extends": "bliss"
+  },
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", {
+        "targets": {
+          "node": "current"
+        }
+      }]
+    ]
   }
 }
