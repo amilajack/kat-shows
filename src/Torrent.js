@@ -4,8 +4,7 @@
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 
-
-export const baseUrl = 'https://kat.cr';
+export const BASE_URL = 'https://kat.cr';
 
 export function formatShowNameToUrl(showName) {
   return (`/${showName}`).toLowerCase().replace(/ /g, '-');
@@ -13,7 +12,7 @@ export function formatShowNameToUrl(showName) {
 
 export async function parseShows() {
   try {
-    const showsHtml = await fetch(`${baseUrl}/tv/show`, {
+    const showsHtml = await fetch(`${BASE_URL}/tv/show`, {
       mode: 'no-cors'
     })
       .then((response) => response.text());
@@ -49,7 +48,7 @@ export async function findShowUrl(showName) {
     throw new Error('A show could not be found');
   }
 
-  return `${baseUrl}${showUrl}`;
+  return `${BASE_URL}${showUrl}`;
 }
 
 export async function findEpisodeId(showName, season, episode) {
@@ -85,7 +84,7 @@ export async function findEpisodeId(showName, season, episode) {
 export default async function parseTorrent(showName, season, episode) {
   const episodeId = await findEpisodeId(showName, season, episode);
 
-  const torrentsHtml = await fetch(`${baseUrl}/media/getepisode/${episodeId}`)
+  const torrentsHtml = await fetch(`${BASE_URL}/media/getepisode/${episodeId}`)
     .then((res) => res.text());
 
   const $ = cheerio.load(torrentsHtml);
